@@ -1,8 +1,12 @@
-package com.example.springjpatest.dao.impl.dao;
+package com.example.springjpatest.dao;
 
+import com.example.springjpatest.entity.Address;
 import com.example.springjpatest.entity.User;
 import com.example.springjpatest.entity.ViewInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +15,7 @@ import java.util.List;
 /**
  * t_user 操作
  */
-@Repository
-public interface UserRepository  extends JpaRepository<User, Long> {
+public interface UserRepository {
     /**
      * 根据用户名查询用户信息
      *
@@ -28,4 +31,12 @@ public interface UserRepository  extends JpaRepository<User, Long> {
     @Query(value="SELECT new com.example.springjpatest.entity.ViewInfo(u,a) " +
             "FROM com.example.springjpatest.entity.User u, com.example.springjpatest.entity.Address a WHERE a.addressId = u.id")
     List<ViewInfo> findViewInfo();
+    List<ViewInfo> findViewInfoByParm(User user);
+
+    ViewInfo findByAddress(Address address);
+
+    public List<User> findObject();
+
+    public List<User> findByif(User user);
+
 }
